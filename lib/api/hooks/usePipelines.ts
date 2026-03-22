@@ -255,6 +255,35 @@ export function useMoveDeal() {
 }
 
 /**
+ * Create a new pipeline
+ */
+export function useCreatePipeline() {
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<Error | null>(null);
+
+  const createPipeline = async (
+    data: { name: string; description?: string }
+  ): Promise<Pipeline | null> => {
+    try {
+      setLoading(true);
+      setError(null);
+      const newPipeline = await post<Pipeline, typeof data>(
+        "/pipelines/pipelines/",
+        data
+      );
+      return newPipeline;
+    } catch (err) {
+      setError(err instanceof Error ? err : new Error("Failed to create pipeline"));
+      return null;
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return { createPipeline, loading, error };
+}
+
+/**
  * Fetch interactions for a deal
  */
 export function useInteractions(dealId: string | null) {

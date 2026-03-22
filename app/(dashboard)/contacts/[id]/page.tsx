@@ -20,6 +20,7 @@ import {
   useCompanies,
   useTags,
 } from '@/lib/api/hooks/useContacts';
+import { useDeals } from '@/lib/api/hooks/usePipelines';
 import {
   ArrowLeft,
   Mail,
@@ -28,6 +29,7 @@ import {
   Calendar,
   Edit,
   Trash2,
+  DollarSign,
 } from 'lucide-react';
 
 const STATUS_COLORS = {
@@ -48,6 +50,7 @@ export default function ContactDetailPage({ params }: PageProps) {
   const { contact, isLoading, refetch } = useContact(resolvedParams.id);
   const { companies } = useCompanies();
   const { tags } = useTags();
+  const { deals, loading: dealsLoading } = useDeals();
   const { updateContact, isLoading: updating } = useUpdateContact();
   const { deleteContact, isLoading: deleting } = useDeleteContact();
 
@@ -226,10 +229,39 @@ export default function ContactDetailPage({ params }: PageProps) {
         <div className="space-y-6">
           <Card>
             <CardHeader>
-              <CardTitle>Activity</CardTitle>
+              <CardTitle>Deals</CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-sm text-gray-500">No recent activity</p>
+              {dealsLoading ? (
+                <p className="text-sm text-gray-500">Loading deals...</p>
+              ) : (() => {
+                const contactDeals = deals.filter((d) => d.contact === resolvedParams.id);
+                if (contactDeals.length === 0) {
+                  return <p className="text-sm text-gray-500">No deals associated</p>;
+                }
+                return (
+                  <div className="space-y-3">
+                    {contactDeals.map((deal) => (
+                      <div
+                        key={deal.id}
+                        className="flex items-center justify-between p-2 rounded-lg border cursor-pointer hover:bg-muted/50"
+                        onClick={() => router.push(`/deals/${deal.id}`)}
+                      >
+                        <div>
+                          <p className="text-sm font-medium">{deal.title}</p>
+                          <Badge variant={deal.status === 'WON' ? 'default' : deal.status === 'LOST' ? 'destructive' : 'secondary'} className="text-xs mt-1">
+                            {deal.status}
+                          </Badge>
+                        </div>
+                        <div className="flex items-center gap-1 text-sm font-medium">
+                          <DollarSign className="size-3" />
+                          {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: deal.currency || 'USD' }).format(deal.value)}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                );
+              })()}
             </CardContent>
           </Card>
         </div>

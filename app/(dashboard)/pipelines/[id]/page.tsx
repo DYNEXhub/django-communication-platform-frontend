@@ -12,6 +12,7 @@ import {
   useMoveDeal,
   useCreateDeal,
 } from "@/lib/api/hooks/usePipelines";
+import { useContacts } from "@/lib/api/hooks/useContacts";
 import { KanbanBoard } from "@/components/kanban/kanban-board";
 import { DealForm } from "@/components/forms/deal-form";
 import { Button } from "@/components/ui/button";
@@ -23,7 +24,6 @@ import {
 } from "@/components/ui/dialog";
 import { ArrowLeft, Plus } from "lucide-react";
 import type { Deal } from "@/lib/api/types/pipeline";
-import type { Contact } from "@/lib/api/types/contact";
 
 interface PageProps {
   params: Promise<{ id: string }>;
@@ -39,8 +39,8 @@ export default function PipelineKanbanPage({ params }: PageProps) {
   const { moveDeal } = useMoveDeal();
   const { createDeal, loading: isCreating } = useCreateDeal();
 
+  const { contacts } = useContacts();
   const [showDealForm, setShowDealForm] = useState(false);
-  const [contacts, setContacts] = useState<Contact[]>([]); // TODO: Fetch from API
 
   const handleDealMove = async (dealId: string, newStageId: string) => {
     await moveDeal(dealId, newStageId);
