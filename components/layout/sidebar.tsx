@@ -41,12 +41,12 @@ export function Sidebar() {
       {/* Logo/Brand */}
       <div className="flex h-16 items-center border-b border-[#312E81] px-4">
         {sidebarCollapsed ? (
-          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#818CF8]/10">
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#818CF8]/10">
             <span className="text-lg font-bold text-[#818CF8]">F</span>
           </div>
         ) : (
-          <div className="flex items-center gap-2">
-            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#818CF8]/10">
+          <div className="flex items-center gap-2.5">
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#818CF8]/10">
               <span className="text-lg font-bold text-[#818CF8]">F</span>
             </div>
             <span className="text-lg font-semibold">
@@ -67,7 +67,7 @@ export function Sidebar() {
               key={item.href}
               href={item.href}
               className={cn(
-                "flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all",
+                "flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium tracking-wide transition-all",
                 "hover:bg-[#E0E7FF]/5",
                 isActive && [
                   "bg-[#E0E7FF]/10 border-l-2 border-[#818CF8]",

@@ -41,7 +41,7 @@ export function MobileNav() {
       <SheetContent side="left" className="w-64 bg-[#1E1B4B] text-[#E0E7FF] border-[#312E81]">
         <SheetHeader>
           <SheetTitle className="flex items-center gap-2 text-[#E0E7FF]">
-            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#818CF8]/10">
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#818CF8]/10">
               <span className="text-lg font-bold text-[#818CF8]">F</span>
             </div>
             <span className="text-lg font-semibold">
@@ -61,7 +61,7 @@ export function MobileNav() {
                 href={item.href}
                 onClick={() => setMobileMenuOpen(false)}
                 className={cn(
-                  "flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all",
+                  "flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium tracking-wide transition-all",
                   "hover:bg-[#E0E7FF]/5",
                   isActive && [
                     "bg-[#E0E7FF]/10 border-l-2 border-[#818CF8]",
