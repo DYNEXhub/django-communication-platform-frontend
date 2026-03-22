@@ -12,6 +12,7 @@ import {
   useInteractions,
 } from "@/lib/api/hooks/usePipelines";
 import { usePipeline } from "@/lib/api/hooks/usePipelines";
+import { useContacts, useContact } from "@/lib/api/hooks/useContacts";
 import { DealForm } from "@/components/forms/deal-form";
 import {
   Card,
@@ -36,8 +37,10 @@ import {
   TrendingUp,
   CheckCircle,
   XCircle,
+  Mail,
+  Phone,
+  Building,
 } from "lucide-react";
-import type { Contact } from "@/lib/api/types/contact";
 
 interface PageProps {
   params: Promise<{ id: string }>;
@@ -53,8 +56,9 @@ export default function DealDetailPage({ params }: PageProps) {
   );
   const { pipeline, stages } = usePipeline(deal?.pipeline || null);
 
+  const { contacts } = useContacts();
+  const { contact: dealContact } = useContact(deal?.contact);
   const [showEditForm, setShowEditForm] = useState(false);
-  const [contacts, setContacts] = useState<Contact[]>([]); // TODO: Fetch from API
 
   if (loading) {
     return (
@@ -230,10 +234,38 @@ export default function DealDetailPage({ params }: PageProps) {
             <CardTitle>Contact Information</CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-sm text-muted-foreground">
-              Contact ID: {deal.contact}
-            </p>
-            {/* TODO: Fetch and display full contact details */}
+            {dealContact ? (
+              <div className="space-y-3">
+                <div className="flex items-center gap-2">
+                  <User className="size-4 text-muted-foreground" />
+                  <span className="font-medium">{dealContact.name}</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Mail className="size-4 text-muted-foreground" />
+                  <a href={`mailto:${dealContact.email}`} className="text-sm text-blue-600 hover:underline">
+                    {dealContact.email}
+                  </a>
+                </div>
+                {dealContact.phone && (
+                  <div className="flex items-center gap-2">
+                    <Phone className="size-4 text-muted-foreground" />
+                    <a href={`tel:${dealContact.phone}`} className="text-sm text-blue-600 hover:underline">
+                      {dealContact.phone}
+                    </a>
+                  </div>
+                )}
+                {dealContact.company && (
+                  <div className="flex items-center gap-2">
+                    <Building className="size-4 text-muted-foreground" />
+                    <span className="text-sm">{dealContact.company.name}</span>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <p className="text-sm text-muted-foreground">
+                Loading contact...
+              </p>
+            )}
           </CardContent>
         </Card>
       </div>
