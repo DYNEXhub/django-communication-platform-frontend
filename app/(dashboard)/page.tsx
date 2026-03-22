@@ -130,9 +130,9 @@ export default function DashboardPage() {
                   <Line
                     type="monotone"
                     dataKey="count"
-                    stroke="#C9A84C"
+                    stroke="#818CF8"
                     strokeWidth={2}
-                    dot={{ fill: "#C9A84C" }}
+                    dot={{ fill: "#818CF8" }}
                   />
                 </LineChart>
               </ResponsiveContainer>
@@ -162,7 +162,7 @@ export default function DashboardPage() {
                       "Value",
                     ]}
                   />
-                  <Bar dataKey="total_value" fill="#C9A84C" radius={[4, 4, 0, 0]} />
+                  <Bar dataKey="total_value" fill="#818CF8" radius={[4, 4, 0, 0]} />
                 </BarChart>
               </ResponsiveContainer>
             ) : (

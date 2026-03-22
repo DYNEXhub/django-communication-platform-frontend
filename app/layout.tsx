@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "CommPlatform - Communication Management Platform",
+  title: "FlowCRM - Customer Relationship Management",
   description: "Manage contacts, companies, pipelines, campaigns, and communications in one place",
 };
 
@@ -27,8 +27,9 @@ export default function RootLayout({
     <html
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased dark`}
+      suppressHydrationWarning
     >
-      <body className="min-h-full">
+      <body className="min-h-full" suppressHydrationWarning>
         {children}
         <Toaster richColors position="top-right" />
       </body>
