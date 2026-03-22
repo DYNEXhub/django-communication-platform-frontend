@@ -63,14 +63,14 @@ export function ContactFilters({
   const hasActiveFilters = selectedStatus || selectedCompany || tagsInput;
 
   return (
-    <div className="flex items-center gap-4 p-4 bg-white border-b">
+    <div className="flex items-center gap-4 p-4 rounded-lg border bg-card text-card-foreground">
       {/* Status Filter */}
       <div className="flex items-center gap-2">
-        <label className="text-sm font-medium text-gray-700">Status:</label>
+        <label className="text-sm font-medium text-muted-foreground">Status:</label>
         <select
           value={selectedStatus || 'all'}
           onChange={(e) => handleStatusChange(e.target.value)}
-          className="px-3 py-1.5 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="px-3 py-1.5 text-sm border border-border rounded-md bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
         >
           <option value="all">All</option>
           <option value="ACTIVE">Active</option>
@@ -81,11 +81,11 @@ export function ContactFilters({
 
       {/* Company Filter */}
       <div className="flex items-center gap-2">
-        <label className="text-sm font-medium text-gray-700">Company:</label>
+        <label className="text-sm font-medium text-muted-foreground">Company:</label>
         <select
           value={selectedCompany || 'all'}
           onChange={(e) => handleCompanyChange(e.target.value)}
-          className="px-3 py-1.5 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="px-3 py-1.5 text-sm border border-border rounded-md bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
         >
           <option value="all">All</option>
           {companies.map((company) => (
@@ -98,13 +98,13 @@ export function ContactFilters({
 
       {/* Tags Filter */}
       <div className="flex items-center gap-2">
-        <label className="text-sm font-medium text-gray-700">Tags:</label>
+        <label className="text-sm font-medium text-muted-foreground">Tags:</label>
         <input
           type="text"
           value={tagsInput}
           onChange={(e) => handleTagsChange(e.target.value)}
           placeholder="Filter by tag name..."
-          className="px-3 py-1.5 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 w-48"
+          className="px-3 py-1.5 text-sm border border-border rounded-md bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring w-48"
         />
       </div>
 
