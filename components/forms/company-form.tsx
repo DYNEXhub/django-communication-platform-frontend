@@ -50,6 +50,7 @@ export function CompanyForm({
 
   useEffect(() => {
     if (company) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- Refresh the editable draft when the selected API entity changes.
       setFormData({
         name: company.name,
         domain: company.domain || '',

@@ -50,6 +50,7 @@ export function DealForm({
   // Initialize form with deal data if editing
   useEffect(() => {
     if (deal) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- Refresh the editable draft when the selected API entity changes.
       setFormData({
         title: deal.title,
         value: deal.value,
