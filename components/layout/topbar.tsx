@@ -90,7 +90,7 @@ export function TopBar() {
       <DropdownMenu>
         <DropdownMenuTrigger className="rounded-full border-0 bg-transparent p-0 outline-none ring-0 focus:outline-none focus:ring-0">
           <Avatar>
-            <AvatarFallback className="bg-[#C9A84C]/10 text-[#C9A84C]">
+            <AvatarFallback className="bg-[#818CF8]/10 text-[#818CF8]">
               {initials}
             </AvatarFallback>
           </Avatar>

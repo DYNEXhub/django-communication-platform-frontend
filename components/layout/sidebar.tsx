@@ -34,23 +34,23 @@ export function Sidebar() {
     <aside
       className={cn(
         "fixed left-0 top-0 h-screen border-r transition-all duration-300",
-        "bg-[#0D1117] text-[#F5F2EB] border-[#0D1117]/20",
+        "bg-[#1E1B4B] text-[#E0E7FF] border-[#312E81]",
         sidebarCollapsed ? "w-16" : "w-64"
       )}
     >
       {/* Logo/Brand */}
-      <div className="flex h-16 items-center border-b border-[#0D1117]/20 px-4">
+      <div className="flex h-16 items-center border-b border-[#312E81] px-4">
         {sidebarCollapsed ? (
-          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#C9A84C]/10">
-            <span className="text-lg font-bold text-[#C9A84C]">C</span>
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#818CF8]/10">
+            <span className="text-lg font-bold text-[#818CF8]">F</span>
           </div>
         ) : (
-          <div className="flex items-center gap-2">
-            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#C9A84C]/10">
-              <span className="text-lg font-bold text-[#C9A84C]">C</span>
+          <div className="flex items-center gap-2.5">
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#818CF8]/10">
+              <span className="text-lg font-bold text-[#818CF8]">F</span>
             </div>
             <span className="text-lg font-semibold">
-              Comm<span className="text-[#C9A84C]">Platform</span>
+              Flow<span className="text-[#818CF8]">CRM</span>
             </span>
           </div>
         )}
@@ -67,16 +67,16 @@ export function Sidebar() {
               key={item.href}
               href={item.href}
               className={cn(
-                "flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all",
-                "hover:bg-[#F5F2EB]/5",
+                "flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium tracking-wide transition-all",
+                "hover:bg-[#E0E7FF]/5",
                 isActive && [
-                  "bg-[#F5F2EB]/10 border-l-2 border-[#C9A84C]",
-                  "text-[#F5F2EB]",
+                  "bg-[#E0E7FF]/10 border-l-2 border-[#818CF8]",
+                  "text-[#E0E7FF]",
                 ],
-                !isActive && "text-[#F5F2EB]/70"
+                !isActive && "text-[#E0E7FF]/70"
               )}
             >
-              <Icon className={cn("h-5 w-5 shrink-0", isActive && "text-[#C9A84C]")} />
+              <Icon className={cn("h-5 w-5 shrink-0", isActive && "text-[#818CF8]")} />
               {!sidebarCollapsed && <span>{item.label}</span>}
             </Link>
           );

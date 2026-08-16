@@ -67,6 +67,7 @@ export function ContactForm({
 
   useEffect(() => {
     if (contact) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- Refresh the editable draft when the selected API entity changes.
       setFormData({
         name: contact.name,
         email: contact.email,

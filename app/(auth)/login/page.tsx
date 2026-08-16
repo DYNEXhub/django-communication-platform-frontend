@@ -37,16 +37,16 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-[#0D1117] p-4">
+    <div className="flex min-h-screen items-center justify-center bg-[#1E1B4B] p-4">
       <Card className="w-full max-w-md">
         <CardHeader className="space-y-1 text-center">
           <div className="mb-4 flex justify-center">
-            <div className="flex h-16 w-16 items-center justify-center rounded-lg bg-[#C9A84C]/10">
-              <span className="text-2xl font-bold text-[#C9A84C]">C</span>
+            <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-[#818CF8]/10">
+              <span className="text-2xl font-bold text-[#818CF8]">F</span>
             </div>
           </div>
           <CardTitle className="text-2xl font-bold">
-            Comm<span className="text-[#C9A84C]">Platform</span>
+            Flow<span className="text-[#818CF8]">CRM</span>
           </CardTitle>
           <CardDescription>
             Sign in to your account to continue
@@ -85,7 +85,7 @@ export default function LoginPage() {
             )}
             <Button
               type="submit"
-              className="w-full bg-[#C9A84C] hover:bg-[#C9A84C]/90 text-[#0D1117]"
+              className="w-full bg-[#4F46E5] hover:bg-[#4338CA] text-white"
               disabled={isLoading}
             >
               {isLoading ? "Signing in..." : "Sign in"}

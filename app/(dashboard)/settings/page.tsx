@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { toast } from "sonner";
 import { useAuthStore } from "@/lib/stores/auth-store";
 import { patch, post } from "@/lib/api/client";
@@ -14,7 +14,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
-import { User, Lock, Mail, Phone } from "lucide-react";
+import { User, Lock, Mail, Camera } from "lucide-react";
 
 export default function SettingsPage() {
   const { user, fetchProfile } = useAuthStore();
@@ -32,6 +32,49 @@ export default function SettingsPage() {
     confirm_password: "",
   });
   const [passwordSaving, setPasswordSaving] = useState(false);
+  const [avatarUploading, setAvatarUploading] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleAvatarUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    if (!file.type.startsWith("image/")) {
+      toast.error("Please select an image file");
+      return;
+    }
+    if (file.size > 5 * 1024 * 1024) {
+      toast.error("Image must be under 5MB");
+      return;
+    }
+
+    setAvatarUploading(true);
+    try {
+      const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000/api/v1";
+      const token = typeof window !== "undefined"
+        ? JSON.parse(localStorage.getItem("auth-store") || "{}")?.state?.accessToken
+        : null;
+
+      const formData = new FormData();
+      formData.append("avatar", file);
+
+      const response = await fetch(`${BASE_URL}/accounts/users/me/`, {
+        method: "PATCH",
+        headers: token ? { Authorization: `Bearer ${token}` } : {},
+        body: formData,
+      });
+
+      if (!response.ok) throw new Error("Upload failed");
+
+      await fetchProfile();
+      toast.success("Profile photo updated");
+    } catch {
+      toast.error("Failed to upload photo");
+    } finally {
+      setAvatarUploading(false);
+      if (fileInputRef.current) fileInputRef.current.value = "";
+    }
+  };
 
   const handleProfileUpdate = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -89,8 +132,33 @@ export default function SettingsPage() {
           {user ? (
             <form onSubmit={handleProfileUpdate} className="space-y-4">
               <div className="flex items-center gap-4 pb-4 border-b">
-                <div className="flex h-16 w-16 items-center justify-center rounded-full bg-primary/10 text-2xl font-bold text-primary">
-                  {user.first_name?.[0] || user.username[0]}
+                <div className="relative group">
+                  {user.avatar ? (
+                    <img
+                      src={user.avatar}
+                      alt={user.first_name || user.username}
+                      className="h-16 w-16 rounded-full object-cover"
+                    />
+                  ) : (
+                    <div className="flex h-16 w-16 items-center justify-center rounded-full bg-primary/10 text-2xl font-bold text-primary">
+                      {user.first_name?.[0] || user.username[0]}
+                    </div>
+                  )}
+                  <button
+                    type="button"
+                    onClick={() => fileInputRef.current?.click()}
+                    disabled={avatarUploading}
+                    className="absolute inset-0 flex items-center justify-center rounded-full bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
+                  >
+                    <Camera className="size-5 text-white" />
+                  </button>
+                  <input
+                    ref={fileInputRef}
+                    type="file"
+                    accept="image/*"
+                    onChange={handleAvatarUpload}
+                    className="hidden"
+                  />
                 </div>
                 <div>
                   <p className="font-semibold text-lg">
@@ -100,6 +168,14 @@ export default function SettingsPage() {
                     <Badge variant="secondary">{user.role}</Badge>
                     <span className="text-sm text-muted-foreground">@{user.username}</span>
                   </div>
+                  <button
+                    type="button"
+                    onClick={() => fileInputRef.current?.click()}
+                    disabled={avatarUploading}
+                    className="text-xs text-muted-foreground hover:text-foreground mt-1 underline cursor-pointer"
+                  >
+                    {avatarUploading ? "Uploading..." : "Change photo"}
+                  </button>
                 </div>
               </div>
 

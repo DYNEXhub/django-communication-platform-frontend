@@ -139,7 +139,7 @@ export default function ContactsPage() {
       header: 'Tags',
       cell: (row) => (
         <div className="flex flex-wrap gap-1">
-          {row.tags.slice(0, 2).map((tag) => (
+          {(row.tags || []).slice(0, 2).map((tag) => (
             <Badge
               key={tag.id}
               style={{ backgroundColor: tag.color }}
@@ -148,7 +148,7 @@ export default function ContactsPage() {
               {tag.name}
             </Badge>
           ))}
-          {row.tags.length > 2 && (
+          {(row.tags || []).length > 2 && (
             <Badge variant="outline" className="text-xs">
               +{row.tags.length - 2}
             </Badge>
